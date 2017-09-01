@@ -1,0 +1,5 @@
+X_DB_SID=infradb 
+X_DB_PDB=infrapdb 
+X_DB_PASSWD=Welcome1 
+X_DB_DOMAIN= 
+X_DB_BUNDLE=basic
