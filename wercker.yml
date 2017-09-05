@@ -28,5 +28,6 @@ dev:
       #/bin/bash
       echo $SQL_PLUS_CMD
       eval $SQL_PLUS_CMD
+      echo "Done creating table"
 #  - internal/shell:
 #     cmd: /bin/bash
