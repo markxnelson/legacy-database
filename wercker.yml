@@ -3,10 +3,14 @@
 services:
   - name: database 
     id: quay.io/ravi_r_singhal/database
+    username: $QUAY_USERNAME
+    password: $QUAY_PASSWORD
     tag: latest
 
 box:
   id: quay.io/ravi_r_singhal/weblogic
+  username: $QUAY_USERNAME
+  password: $QUAY_PASSWORD
   tag: latest
  
 dev:
