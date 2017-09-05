@@ -1,14 +1,28 @@
 # Copyright 2017, Oracle Corporation and/or affiliates.  All rights reserved.
 
-box: 
-  id: store/oracle/database-enterprise
-  username: $OCR_USERNAME
-  password: $OCR_PASSWORD
-  tag: 12.1.0.2
+services:
+  - name: database 
+    id: quay.io/ravi_r_singhal/database
+    tag: latest
 
+box:
+  id: quay.io/ravi_r_singhal/weblogic
+  tag: latest
+ 
 dev:
-  steps:
-# user the internal shell thing
-    - internal/shell:
-        cmd: /bin/bash
-
+ steps:
+  - script: 
+     name: "Wait for DB connection" 
+     code: | 
+      # Wait for 1521 to open
+      while ! nc $DATABASE_PORT_1521_TCP_ADDR $DATABASE_PORT_1521_TCP_PORT < /dev/null; do sleep 3; done
+      # sleep for some extra time for db setup
+      sleep 100 
+      export LD_LIBRARY_PATH=/usr/lib/oracle/12.2/client64/lib
+      ls -lahrt
+      export SQL_PLUS_CMD="sqlplus64 -S sys/$DATABASE_ENV_DB_PASSWD@$DATABASE_PORT_1521_TCP_ADDR:$DATABASE_PORT_1521_TCP_PORT/$DATABASE_ENV_DB_SID.$DATABASE_ENV_DB_DOMAIN as sysdba @createSchema.sql"
+      #/bin/bash
+      echo $SQL_PLUS_CMD
+      eval $SQL_PLUS_CMD
+#  - internal/shell:
+#     cmd: /bin/bash
